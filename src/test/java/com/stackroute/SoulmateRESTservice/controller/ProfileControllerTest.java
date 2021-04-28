@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -49,10 +50,27 @@ class ProfileControllerTest {
     public void getAllProfilesThenShouldReturnListOfUsers() throws Exception{
         when(profileService.getALLProfiles()).thenReturn(profileList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/profiles")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(profile)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(profile)))
                 .andDo(MockMvcResultHandlers.print());
         verify(profileService,times(1)).getALLProfiles();
     }
+
+//    @Test
+//    public void deleteProfile() throws Exception {
+//        Mockito.when(profileService.delete(1)).thenReturn("SUCCESS");
+//        mockMvc.perform(MockMvcRequestBuilders.delete("/applications", 10001L))
+//                .andExpect(status().isOk());
+//    }
+    @Test
+    public void deletePro() throws Exception{
+        profileService.delete(1);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/profile/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(profile)))
+                .andExpect(status().isOk());
+    }
+
     public static String asJsonString(final Object obj){
         try{
             return new ObjectMapper().writeValueAsString(obj);
