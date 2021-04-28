@@ -55,15 +55,9 @@ class ProfileControllerTest {
                 .andDo(MockMvcResultHandlers.print());
         verify(profileService,times(1)).getALLProfiles();
     }
-
-//    @Test
-//    public void deleteProfile() throws Exception {
-//        Mockito.when(profileService.delete(1)).thenReturn("SUCCESS");
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/applications", 10001L))
-//                .andExpect(status().isOk());
-//    }
+    
     @Test
-    public void deletePro() throws Exception{
+    public void deleteProfile() throws Exception{
         profileService.delete(1);
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/profile/1")
                 .contentType(MediaType.APPLICATION_JSON)
